@@ -1,0 +1,5 @@
+# File containing version
+include .VERSION
+
+# List of pip package required by module
+include requirements.txt

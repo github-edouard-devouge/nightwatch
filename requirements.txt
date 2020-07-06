@@ -1,0 +1,10 @@
+pydantic
+typing
+typing-extensions
+kubernetes
+requests
+dateparser
+fastapi
+uvicorn
+aiofiles
+starlette_exporter

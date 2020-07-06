@@ -1,0 +1,9 @@
+stages:
+  - build
+
+ci-build:
+  stage: build
+  tags:
+    - build
+  script:
+    - make all
