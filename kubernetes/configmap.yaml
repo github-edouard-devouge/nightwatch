@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nightwatch
+  namespace: nightwatch
+data:
+  tag-filters.json: |
+    {"tag-filters": [
+      {
+          "scope": "global",
+          "regex": "latest",
+          "operator": "exclude"
+      },
+      {
+          "scope": "global",
+          "regex": "master",
+          "operator": "exclude"
+      },
+      {
+          "scope": "global",
+          "regex": "dev",
+          "operator": "exclude"
+      },
+      {
+          "scope": "global",
+          "regex": "snapshot",
+          "operator": "exclude"
+      },
+      {
+          "scope": "global",
+          "regex": "alpine",
+          "operator": "exclude"
+      }
+      ]
+    }
