@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run build
 
 # Build python3 app
-FROM python:3.8-buster as build-python
+FROM python:3.8 as build-python
 ARG projectName=nightwatch
 ARG appRoot=/app/$projectName
 WORKDIR $appRoot
@@ -21,7 +21,7 @@ RUN make build-py
 
 
 # Production image
-FROM python:3.8-buster as production
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8 as production
 # Define some default variables (overwritten with build extra-args)
 ARG projectName=nightwatch
 ARG appRoot=/app/$projectName
@@ -58,6 +58,4 @@ RUN rm -rf $appRoot/dist
 ENV AWS_DEFAULT_REGION='eu-west-1'
 ENV APP_ROOT=$appRoot
 ENV WEBUI_ROOT=$webUiRoot
-
-# Run entrypoint script
-CMD ["uvicorn", "nightwatch:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+ENV DEFAULT_MODULE_NAME=$projectName
