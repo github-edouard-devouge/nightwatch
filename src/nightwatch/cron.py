@@ -1,11 +1,9 @@
-# Module: terminator
-
 from threading import Timer
 
 
 class CronMethod(object):
     """
-    Class to run a specified method in an autonomous thread timer 
+    Class to run a specified method in an autonomous thread timer
     """
 
     def __init__(self, interval, function, *args, **kwargs):

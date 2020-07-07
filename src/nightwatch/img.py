@@ -1,6 +1,6 @@
-
 import logging
 from uuid import uuid4
+
 from .dockerutils import parseImage
 from .models import Image, Registry, Tag
 from .tags import NotSupportedRegistry, CouldNotJoinRegitry, getTags, getYoungestTag, getTagTS
