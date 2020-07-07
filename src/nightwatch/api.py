@@ -1,17 +1,28 @@
 from .models import Image
 from .nightwatch import NightWatch
 
-from typing import List
-
-from starlette.responses import JSONResponse
+import os
+from starlette.responses import JSONResponse, Response
+from starlette_exporter import handle_metrics
 from fastapi.encoders import jsonable_encoder
 from fastapi import APIRouter
 from typing import List
 from uuid import UUID
-
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST, REGISTRY
 
 nw = NightWatch()
 router = APIRouter()
+
+
+@router.get("/metrics", tags=["metrics"])
+def metrics():
+    registry = REGISTRY
+    if 'prometheus_multiproc_dir' in os.environ:
+        registry = CollectorRegistry()
+        multiprocess.MultiProcessCollector(registry)
+
+    headers = {'Content-Type': CONTENT_TYPE_LATEST}
+    return Response(generate_latest(registry), status_code=200, headers=headers)
 
 
 @router.get("/status", tags=["status"])

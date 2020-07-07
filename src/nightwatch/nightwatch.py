@@ -1,6 +1,7 @@
 from .img import parse, enrichTags
 from .kube import getAllClusterImages
 from .cron import CronMethod
+from .metrics import updateImageMetrics
 
 from datetime import datetime
 import logging
@@ -27,6 +28,7 @@ class NightWatch():
                 self.imagesToUpdate.append(image)
         self.watch_ts = datetime.now()
         self.watching = False
+        updateImageMetrics(self.imagesToUpdate)
         logging.info("Watch complete.")
 
     def start(self):

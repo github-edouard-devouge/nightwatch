@@ -65,16 +65,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Expose prometheus metrics
+app.add_middleware(PrometheusMiddleware, app_name="nightwatch", group_paths=True)
+app.add_route("/metrics", handle_metrics)
+
 
 # Expose api
 app.include_router(router, prefix=API_ROOT)
 
 # Expose statics files for webui
 app.mount("/", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui")
-
-# Expose prometheus metrics
-app.add_middleware(PrometheusMiddleware, app_name="nightwatch", group_paths=True)
-app.add_route("/metrics", handle_metrics)
 
 
 # Start nightwatch daemon before startup
