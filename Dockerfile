@@ -1,7 +1,8 @@
 ### multistage-build dockerfile for nightwatch-all-in-one
 
-# Build vuejs app
+## Build vuejs app
 FROM node:latest as build-vuejs
+# Define some default variables (overwritten with build extra-args)
 ARG projectName=nightwatch
 ARG appRoot=/app/$projectName
 ARG jsProjectRoot=./webui/$projectName
@@ -11,7 +12,7 @@ COPY $jsProjectRoot .
 RUN npm install
 RUN npm run build
 
-# Build python3 app
+## Build python3 app
 FROM python:3.8 as build-python
 ARG projectName=nightwatch
 ARG appRoot=/app/$projectName
@@ -20,7 +21,7 @@ COPY . .
 RUN make build-py
 
 
-# Production image
+## Production image
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8 as production
 # Define some default variables (overwritten with build extra-args)
 ARG projectName=nightwatch
@@ -41,8 +42,6 @@ COPY --from=build-python $appRoot/dist $appRoot/dist
 
 # Install system packages
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
     curl \
     bash \
     && rm -rf /var/lib/apt/lists/*
@@ -55,7 +54,6 @@ RUN pip install --upgrade pip && \
 RUN rm -rf $appRoot/dist
 
 # Set few env vars
-ENV AWS_DEFAULT_REGION='eu-west-1'
 ENV APP_ROOT=$appRoot
 ENV WEBUI_ROOT=$webUiRoot
 ENV DEFAULT_MODULE_NAME=$projectName
