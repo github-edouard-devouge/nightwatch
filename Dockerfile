@@ -59,3 +59,4 @@ ENV AWS_DEFAULT_REGION='eu-west-1'
 ENV APP_ROOT=$appRoot
 ENV WEBUI_ROOT=$webUiRoot
 ENV DEFAULT_MODULE_NAME=$projectName
+ENV APP_MODULE='nightwatch:app'
