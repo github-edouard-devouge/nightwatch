@@ -23,7 +23,7 @@ spec:
         app: nightwatch
     spec:
       containers:
-        image: edevouge/nightwatch:latest
+      - image: edevouge/nightwatch:latest
         imagePullPolicy: Always
         name: nightwatch
         ports:
@@ -39,6 +39,7 @@ spec:
         - mountPath: /etc/nightwatch
           name: config
       restartPolicy: Always
+      serviceAccount: nightwatch
       terminationGracePeriodSeconds: 10
       volumes:
       - configMap:
