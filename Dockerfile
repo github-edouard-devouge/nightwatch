@@ -60,3 +60,4 @@ ENV APP_ROOT=$appRoot
 ENV WEBUI_ROOT=$webUiRoot
 ENV DEFAULT_MODULE_NAME=$projectName
 ENV APP_MODULE='nightwatch:app'
+ENV PORT=8000
