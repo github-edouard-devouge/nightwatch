@@ -6,7 +6,7 @@ def getAllClusterImages():
 
     try:
         config.load_kube_config()
-    except IOError:
+    except (IOError, config.config_exception.ConfigException) as e:
         try:
             config.load_incluster_config()
         except config.config_exception.ConfigException as e:
