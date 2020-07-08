@@ -19,15 +19,11 @@ K8S_RESOURCE_KIND ?= deployment
 K8S_RESOURCE_NAME ?= $(NAME)
 K8S_CONTAINER_NAME ?= $(NAME)
 
-all: test build-docker tag ecr-login push clean
+all: build-docker tag ecr-login push clean
 
 .PHONY: init
 init:
 	./.init/init.sh $(NAME)
-
-.PHONY: test
-test:
-	pytest -v --cov=src tests/
 
 .PHONY: build
 build: clean auto-increment-version build-docker
