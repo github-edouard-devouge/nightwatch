@@ -1,11 +1,11 @@
-![NightWatch](./docs/img/nightwatch_logo_title.png)
+![NightWatch](https://raw.githubusercontent.com/edevouge/nightwatch/master/docs/img/nightwatch_logo_title.png)
 
 
 ## About
 
 **NightWatch** is a tool to monitor docker images deployed in a kubernetes cluster and track for new tags released in the registry.
 
-![WebUi screenshot](./docs/img/nightwatch_webui.png)
+![WebUi screenshot](https://raw.githubusercontent.com/edevouge/nightwatch/master/docs/img/nightwatch_webui.png)
 
 
 An all-in-one [docker image](https://hub.docker.com/r/edevouge/nightwatch) is released including this components:
