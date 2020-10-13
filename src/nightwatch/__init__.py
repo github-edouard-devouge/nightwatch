@@ -70,13 +70,14 @@ app.add_middleware(
 app.add_middleware(PrometheusMiddleware, app_name="nightwatch", group_paths=True)
 app.add_route("/metrics", handle_metrics)
 
-
 # Expose api
 app.include_router(router, prefix=API_ROOT)
 
 # Expose statics files for webui
-app.mount("/", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui")
-
+app.mount("/", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui-root")
+app.mount("/image", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui-image")
+app.mount("/images", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui-images")
+app.mount("/findings", StaticFiles(directory=WEBUI_ROOT, html=True), name="webui-findings")
 
 # Start nightwatch daemon before startup
 @app.on_event("startup")
