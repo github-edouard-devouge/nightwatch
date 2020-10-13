@@ -1,6 +1,7 @@
 from .img import parse, enrichTags
 from .kube import getAllClusterImages
 from .cron import CronMethod
+from .tags import getEligibleTags
 from .metrics import updateImageMetrics
 
 from datetime import datetime
@@ -24,7 +25,7 @@ class NightWatch():
         self.images = enrichTags(self.images)
         self.imagesToUpdate = []
         for image in self.images:
-            if image.targetTag:
+            if image.targetTag and getEligibleTags(image.registry, image.repository, [image.currentTag.dict()]):
                 self.imagesToUpdate.append(image)
         self.watch_ts = datetime.now()
         self.watching = False
