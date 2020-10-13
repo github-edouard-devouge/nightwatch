@@ -1,11 +1,13 @@
 <template>
   <div id="SingleImage">
     <b-card no-body class="overflow-hidden cards">
+      <template v-slot:header>
+        <h5 class="mb-0">Recent tag released</h5>
+      </template>
       <b-row  align-v="center" no-gutters>
         <b-col md="1">
           <b-card-img style="margin: 0 20px;" :src="require('../assets/docker.png')" alt="Image" ></b-card-img>
         </b-col>
-
         <b-col>
           <b-card-body style="text-align: left; margin: 20px;">
             <h3>{{image.repository}}</h3>
@@ -17,7 +19,6 @@
             </b-popover>
           </b-card-body>
         </b-col>
-
         <b-col md="3">
           <h4 :id="`popover-1-${image.uuid}`">Current tag: <b-badge variant="secondary">{{image.currentTag.name}}</b-badge></h4>
           <b-popover :target="`popover-1-${image.uuid}`" triggers="hover" placement="top">
@@ -32,7 +33,33 @@
             <p style="text-align:center;"><b-icon icon="calendar2" variant="dark"></b-icon> {{image.targetTag.start_ts | formatDate}}</p>
           </b-popover>
         </b-col>
-
+      </b-row>
+    </b-card>
+    <b-card no-body class="overflow-hidden cards">
+      <template v-slot:header>
+        <h5 class="mb-0">Linked Kubernetes resources</h5>
+      </template>
+      <b-row  align-v="center" no-gutters>
+        <b-col>
+          <p style="text-align: center; margin: 20px;">Found <b-avatar size="3rem" variant="danger"><b>{{ image.kubeResources.length }}</b></b-avatar> Kubernetes resources referencing <a class="link" href="#">{{image.repository}}:<b>{{image.currentTag.name}}</b></a> image</p>
+        </b-col>
+      </b-row>
+      <b-row  align-v="center" no-gutters>
+        <div class="mt-3" style="padding: 20px;">
+        <b-card-group align-v="center" columns>
+          <b-card align-v="center" md="6" v-for="resource in image.kubeResources" :key="resource.name" no-body class="overflow-hidden" border-variant="secondary" >
+            <template v-slot:header>
+              <h6 class="mb-0">{{resource.kind.toUpperCase()}}</h6>
+            </template>
+            <b-card-text style="padding: 20px;" align-v="center">
+              <b>Name: </b><br>
+              <b-badge variant="danger">{{resource.name}}</b-badge> <br>
+              <b>Namespace: </b><br>
+              <b-badge variant="secondary">{{resource.namespace}}</b-badge>
+            </b-card-text>
+          </b-card>
+        </b-card-group>
+      </div>
       </b-row>
     </b-card>
     <b-card header-tag="header" class="overflow-hidden cards">

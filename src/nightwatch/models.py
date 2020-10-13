@@ -66,6 +66,21 @@ class Registry(BaseModel):
         }
 
 
+class KubeResource(BaseModel):
+    name: str
+    namespace: str
+    kind: str
+
+    class Config:
+        schema_extra = {
+             'example': [{
+                'name': 'prometheus-k8s',
+                'namespace': 'kube-system',
+                'kind': 'statefulset'
+             }]
+        }
+
+
 class Image(BaseModel):
     uuid: UUID = uuid4()
     repository: str
@@ -73,6 +88,7 @@ class Image(BaseModel):
     currentTag: Tag = None
     targetTag: Tag = None
     availableTags: List[Tag] = []
+    kubeResources: List[KubeResource] = []
 
     class Config:
         schema_extra = {
@@ -101,6 +117,18 @@ class Image(BaseModel):
                         {
                             'name': 'v1.0.4',
                             'start_ts': datetime.now()
+                        }
+                    ],
+                    'kubeResources': [
+                        {
+                            'name': 'prometheus-k8s',
+                            'namespace': 'kube-system',
+                            'kind': 'statefulset.apps'
+                        },
+                        {
+                            'name': 'pagerduty-exporter',
+                            'namespace': 'monitoring',
+                            'kind': 'deployment.apps'
                         }
                     ]
                 }

@@ -2,20 +2,30 @@ import logging
 from uuid import uuid4
 
 from .dockerutils import parseImage
-from .models import Image, Registry, Tag
+from .models import Image, Registry, Tag, KubeResource
 from .tags import NotSupportedRegistry, CouldNotJoinRegitry, getTags, getYoungestTag, getTagTS
 
 
 def parse(imagesNames):
     images = []
-    for imageName in imagesNames:
+    for imageName, kResources in imagesNames.items():
+        kubeResources = []
+        for resource in kResources:
+            kubeResources.append(
+                KubeResource(
+                    name=resource['name'],
+                    namespace=resource['namespace'],
+                    kind=resource['kind']
+                )
+            )
         imageInfo = parseImage(imageName)
         images.append(
             Image(
-                uuid= uuid4(),
-                repository= imageInfo['repository'],
-                registry = Registry(name=imageInfo['registry']),
-                currentTag = Tag(name=imageInfo['tag'])
+                uuid=uuid4(),
+                repository=imageInfo['repository'],
+                registry=Registry(name=imageInfo['registry']),
+                currentTag=Tag(name=imageInfo['tag']),
+                kubeResources=sorted(kubeResources, key=lambda k: k.namespace)
             )
         )
     return images
