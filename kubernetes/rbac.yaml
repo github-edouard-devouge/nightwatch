@@ -10,11 +10,14 @@ metadata:
   name: nightwatch
   namespace: nightwatch
 rules:
-- apiGroups: ["", "batch"]
+- apiGroups: ["", "batch", "extensions", "apps"]
   resources:
   - jobs
   - pods
   - cronjobs
+  - deployments
+  - statefulsets
+  - deamonsets
   verbs:
   - get
   - list
