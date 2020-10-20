@@ -17,7 +17,7 @@ rules:
   - cronjobs
   - deployments
   - statefulsets
-  - deamonsets
+  - daemonsets
   verbs:
   - get
   - list
