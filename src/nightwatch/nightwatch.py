@@ -21,12 +21,20 @@ class NightWatch():
     def watch(self):
         logging.info("Starting a new watch...")
         self.watching = True
-        self.images = parse(getAllClusterImages())
-        self.images = enrichTags(self.images)
-        self.imagesToUpdate = []
-        for image in self.images:
-            if image.targetTag and getEligibleTags(image.registry, image.repository, [image.currentTag.dict()]):
-                self.imagesToUpdate.append(image)
+        images = []
+        images = parse(getAllClusterImages())
+        images = enrichTags(images)
+        imagesToUpdate = []
+        for image in images:
+            # check if we have a targetTag and if currentTag eligible to filters
+            if image.targetTag and getEligibleTags(
+                    image.registry,
+                    image.repository,
+                    [image.currentTag.dict()]):
+                imagesToUpdate.append(image)
+        # Update watch result
+        self.imagesToUpdate = imagesToUpdate
+        self.images = images
         self.watch_ts = datetime.now()
         self.watching = False
         updateImageMetrics(self.imagesToUpdate)
