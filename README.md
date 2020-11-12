@@ -8,10 +8,10 @@
 ![WebUi screenshot](https://raw.githubusercontent.com/edevouge/nightwatch/master/docs/img/nightwatch_webui.png)
 
 
-An all-in-one [docker image](https://hub.docker.com/r/edevouge/nightwatch) is released including this components:
-- `Daemon`: is the scheduled job that watches every hour: in the kubernetes cluster for images and in the registry for new tags.
-- `API`: is an http endpoint exposing both: daemon lifecycle related actions and a REST CRUD api. A swagger doc is also available (route: `/api/v1/`)
-- `Metrics`: exposes prometheus metrics at [openmetrics](https://openmetrics.io/) format (route: `/metrics`)
+An all-in-one [docker image](https://hub.docker.com/r/edevouge/nightwatch) is released including these components:
+- `Daemon`: is the job that watches every hour in the kubernetes cluster for images and in the registry for new tags.
+- `API`: is an http endpoint exposing both: daemon lifecycle related actions and a REST CRUD api. An OpenApi / Swagger doc is also exposed (route: `/api/v1/`)
+- `Metrics`: exposes prometheus metrics at [OpenMetrics](https://openmetrics.io/) format (route: `/metrics`)
 - `WebUI`: is a simple web console (route: `/`)
 
 For now, only `docker.io` and `quay.io` registries are supported.
